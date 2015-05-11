@@ -1,3 +1,8 @@
+# Ignore Intellij IDEA
+*.iml
+*.iws
+*.ipr
+
 # Ignore thumbnails created by windows
 Thumbs.db
 

@@ -5586,6 +5586,359 @@ getInstance : function (
 };
 
 /**
+ * @class Properties
+ */
+cc.Properties = {
+
+/**
+ * @method getVariable
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {char}
+ */
+getVariable : function (
+char, 
+char 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getString
+ * @return {char}
+ */
+getString : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getLong
+ * @return {long}
+ */
+getLong : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNamespace
+* @param {char} char
+* @param {bool} bool
+* @param {bool} bool
+* @return {char|cc.Properties}
+*/
+getNamespace : function(
+char,
+bool,
+bool 
+)
+{
+    return cc.Properties;
+},
+
+/**
+ * @method getPath
+ * @param {char} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+getPath : function (
+char, 
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method getMat4
+ * @param {char} arg0
+ * @param {mat4_object} arg1
+ * @return {bool}
+ */
+getMat4 : function (
+char, 
+mat4 
+)
+{
+    return false;
+},
+
+/**
+ * @method exists
+ * @param {char} arg0
+ * @return {bool}
+ */
+exists : function (
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method setString
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {bool}
+ */
+setString : function (
+char, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method getId
+ * @return {char}
+ */
+getId : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method rewind
+ */
+rewind : function (
+)
+{
+},
+
+/**
+ * @method setVariable
+ * @param {char} arg0
+ * @param {char} arg1
+ */
+setVariable : function (
+char, 
+char 
+)
+{
+},
+
+/**
+ * @method getBool
+ * @return {bool}
+ */
+getBool : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getColor
+* @param {char|char} char
+* @param {vec4_object|vec3_object} vec4
+* @return {bool|bool}
+*/
+getColor : function(
+char,
+vec3 
+)
+{
+    return false;
+},
+
+/**
+ * @method getType
+ * @return {cc.Properties::Type}
+ */
+getType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNextNamespace
+ * @return {cc.Properties}
+ */
+getNextNamespace : function (
+)
+{
+    return cc.Properties;
+},
+
+/**
+ * @method getInt
+ * @return {int}
+ */
+getInt : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getVec3
+ * @param {char} arg0
+ * @param {vec3_object} arg1
+ * @return {bool}
+ */
+getVec3 : function (
+char, 
+vec3 
+)
+{
+    return false;
+},
+
+/**
+ * @method getVec2
+ * @param {char} arg0
+ * @param {vec2_object} arg1
+ * @return {bool}
+ */
+getVec2 : function (
+char, 
+vec2 
+)
+{
+    return false;
+},
+
+/**
+ * @method getVec4
+ * @param {char} arg0
+ * @param {vec4_object} arg1
+ * @return {bool}
+ */
+getVec4 : function (
+char, 
+vec4 
+)
+{
+    return false;
+},
+
+/**
+ * @method getNextProperty
+ * @return {char}
+ */
+getNextProperty : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getFloat
+ * @return {float}
+ */
+getFloat : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getQuaternionFromAxisAngle
+ * @param {char} arg0
+ * @param {cc.Quaternion} arg1
+ * @return {bool}
+ */
+getQuaternionFromAxisAngle : function (
+char, 
+quaternion 
+)
+{
+    return false;
+},
+
+/**
+ * @method parseColor
+* @param {char|char} char
+* @param {vec4_object|vec3_object} vec4
+* @return {bool|bool}
+*/
+parseColor : function(
+char,
+vec3 
+)
+{
+    return false;
+},
+
+/**
+ * @method parseVec3
+ * @param {char} arg0
+ * @param {vec3_object} arg1
+ * @return {bool}
+ */
+parseVec3 : function (
+char, 
+vec3 
+)
+{
+    return false;
+},
+
+/**
+ * @method parseAxisAngle
+ * @param {char} arg0
+ * @param {cc.Quaternion} arg1
+ * @return {bool}
+ */
+parseAxisAngle : function (
+char, 
+quaternion 
+)
+{
+    return false;
+},
+
+/**
+ * @method parseVec2
+ * @param {char} arg0
+ * @param {vec2_object} arg1
+ * @return {bool}
+ */
+parseVec2 : function (
+char, 
+vec2 
+)
+{
+    return false;
+},
+
+/**
+ * @method createNonRefCounted
+ * @param {String} arg0
+ * @return {cc.Properties}
+ */
+createNonRefCounted : function (
+str 
+)
+{
+    return cc.Properties;
+},
+
+/**
+ * @method parseVec4
+ * @param {char} arg0
+ * @param {vec4_object} arg1
+ * @return {bool}
+ */
+parseVec4 : function (
+char, 
+vec4 
+)
+{
+    return false;
+},
+
+};
+
+/**
  * @class FileUtils
  */
 cc.FileUtils = {
@@ -18087,41 +18440,13 @@ TransitionProgressOutIn : function (
 cc.Camera = {
 
 /**
- * @method setScene
- * @param {cc.Scene} arg0
+ * @method getDepth
+ * @return {int}
  */
-setScene : function (
-scene 
+getDepth : function (
 )
 {
-},
-
-/**
- * @method initPerspective
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
- */
-initPerspective : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getProjectionMatrix
- * @return {mat4_object}
- */
-getProjectionMatrix : function (
-)
-{
-    return cc.Mat4;
+    return 0;
 },
 
 /**
@@ -18135,13 +18460,75 @@ getViewProjectionMatrix : function (
 },
 
 /**
- * @method getViewMatrix
+ * @method lookAt
+ * @param {vec3_object} arg0
+ * @param {vec3_object} arg1
+ */
+lookAt : function (
+vec3, 
+vec3 
+)
+{
+},
+
+/**
+ * @method getProjectionMatrix
  * @return {mat4_object}
  */
-getViewMatrix : function (
+getProjectionMatrix : function (
 )
 {
     return cc.Mat4;
+},
+
+/**
+ * @method getDepthInView
+ * @param {mat4_object} arg0
+ * @return {float}
+ */
+getDepthInView : function (
+mat4 
+)
+{
+    return 0;
+},
+
+/**
+ * @method initOrthographic
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initOrthographic : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method setDepth
+ * @param {int} arg0
+ */
+setDepth : function (
+int 
+)
+{
+},
+
+/**
+ * @method initDefault
+ * @return {bool}
+ */
+initDefault : function (
+)
+{
+    return false;
 },
 
 /**
@@ -18165,13 +18552,53 @@ getType : function (
 },
 
 /**
- * @method initDefault
- * @return {bool}
+ * @method clearBackground
+ * @param {float} arg0
  */
-initDefault : function (
+clearBackground : function (
+float 
 )
 {
-    return false;
+},
+
+/**
+ * @method setAdditionalProjection
+ * @param {mat4_object} arg0
+ */
+setAdditionalProjection : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method setScene
+ * @param {cc.Scene} arg0
+ */
+setScene : function (
+scene 
+)
+{
+},
+
+/**
+ * @method getViewMatrix
+ * @return {mat4_object}
+ */
+getViewMatrix : function (
+)
+{
+    return cc.Mat4;
+},
+
+/**
+ * @method getNearPlane
+ * @return {float}
+ */
+getNearPlane : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -18187,30 +18614,6 @@ vec3
 },
 
 /**
- * @method getDepthInView
- * @param {mat4_object} arg0
- * @return {float}
- */
-getDepthInView : function (
-mat4 
-)
-{
-    return 0;
-},
-
-/**
- * @method lookAt
- * @param {vec3_object} arg0
- * @param {vec3_object} arg1
- */
-lookAt : function (
-vec3, 
-vec3 
-)
-{
-},
-
-/**
  * @method setCameraFlag
  * @param {cc.CameraFlag} arg0
  */
@@ -18221,14 +18624,24 @@ cameraflag
 },
 
 /**
- * @method initOrthographic
+ * @method getFarPlane
+ * @return {float}
+ */
+getFarPlane : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initPerspective
  * @param {float} arg0
  * @param {float} arg1
  * @param {float} arg2
  * @param {float} arg3
  * @return {bool}
  */
-initOrthographic : function (
+initPerspective : function (
 float, 
 float, 
 float, 
@@ -18236,36 +18649,6 @@ float
 )
 {
     return false;
-},
-
-/**
- * @method setAdditionalProjection
- * @param {mat4_object} arg0
- */
-setAdditionalProjection : function (
-mat4 
-)
-{
-},
-
-/**
- * @method getDepth
- * @return {int}
- */
-getDepth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setDepth
- * @param {int} arg0
- */
-setDepth : function (
-int 
-)
-{
 },
 
 /**
@@ -19410,6 +19793,446 @@ GLProgramCache : function (
 };
 
 /**
+ * @class RenderState
+ */
+cc.RenderState = {
+
+/**
+ * @method setTexture
+ * @param {cc.Texture2D} arg0
+ */
+setTexture : function (
+texture2d 
+)
+{
+},
+
+/**
+ * @method getTopmost
+ * @param {cc.RenderState} arg0
+ * @return {cc.RenderState}
+ */
+getTopmost : function (
+renderstate 
+)
+{
+    return cc.RenderState;
+},
+
+/**
+ * @method getTexture
+ * @return {cc.Texture2D}
+ */
+getTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
+ * @method bind
+ * @param {cc.Pass} arg0
+ */
+bind : function (
+pass 
+)
+{
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getStateBlock
+ * @return {cc.RenderState::StateBlock}
+ */
+getStateBlock : function (
+)
+{
+    return cc.RenderState::StateBlock;
+},
+
+/**
+ * @method getTextures
+ * @return {Array}
+ */
+getTextures : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method initialize
+ */
+initialize : function (
+)
+{
+},
+
+/**
+ * @method finalize
+ */
+finalize : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Pass
+ */
+cc.Pass = {
+
+/**
+ * @method unbind
+ */
+unbind : function (
+)
+{
+},
+
+/**
+ * @method bind
+* @param {mat4_object|mat4_object} mat4
+* @param {bool} bool
+*/
+bind : function(
+mat4,
+bool 
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {cc.Pass}
+ */
+clone : function (
+)
+{
+    return cc.Pass;
+},
+
+/**
+ * @method getGLProgramState
+ * @return {cc.GLProgramState}
+ */
+getGLProgramState : function (
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getVertexAttributeBinding
+ * @return {cc.VertexAttribBinding}
+ */
+getVertexAttributeBinding : function (
+)
+{
+    return cc.VertexAttribBinding;
+},
+
+/**
+ * @method getHash
+ * @return {unsigned int}
+ */
+getHash : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setVertexAttribBinding
+ * @param {cc.VertexAttribBinding} arg0
+ */
+setVertexAttribBinding : function (
+vertexattribbinding 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {cc.Technique} arg0
+ * @return {cc.Pass}
+ */
+create : function (
+technique 
+)
+{
+    return cc.Pass;
+},
+
+/**
+ * @method createWithGLProgramState
+ * @param {cc.Technique} arg0
+ * @param {cc.GLProgramState} arg1
+ * @return {cc.Pass}
+ */
+createWithGLProgramState : function (
+technique, 
+glprogramstate 
+)
+{
+    return cc.Pass;
+},
+
+};
+
+/**
+ * @class Technique
+ */
+cc.Technique = {
+
+/**
+ * @method getPassCount
+ * @return {long}
+ */
+getPassCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method clone
+ * @return {cc.Technique}
+ */
+clone : function (
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method addPass
+ * @param {cc.Pass} arg0
+ */
+addPass : function (
+pass 
+)
+{
+},
+
+/**
+ * @method getPasses
+ * @return {Array}
+ */
+getPasses : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getPassByIndex
+ * @param {long} arg0
+ * @return {cc.Pass}
+ */
+getPassByIndex : function (
+long 
+)
+{
+    return cc.Pass;
+},
+
+/**
+ * @method create
+ * @param {cc.Material} arg0
+ * @return {cc.Technique}
+ */
+create : function (
+material 
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method createWithGLProgramState
+ * @param {cc.Material} arg0
+ * @param {cc.GLProgramState} arg1
+ * @return {cc.Technique}
+ */
+createWithGLProgramState : function (
+material, 
+glprogramstate 
+)
+{
+    return cc.Technique;
+},
+
+};
+
+/**
+ * @class Material
+ */
+cc.Material = {
+
+/**
+ * @method clone
+ * @return {cc.Material}
+ */
+clone : function (
+)
+{
+    return cc.Material;
+},
+
+/**
+ * @method getTechniqueCount
+ * @return {long}
+ */
+getTechniqueCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setName
+ * @param {String} arg0
+ */
+setName : function (
+str 
+)
+{
+},
+
+/**
+ * @method getTechniqueByIndex
+ * @param {long} arg0
+ * @return {cc.Technique}
+ */
+getTechniqueByIndex : function (
+long 
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getTechniques
+ * @return {Array}
+ */
+getTechniques : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method setTechnique
+ * @param {String} arg0
+ */
+setTechnique : function (
+str 
+)
+{
+},
+
+/**
+ * @method getTechniqueByName
+ * @param {String} arg0
+ * @return {cc.Technique}
+ */
+getTechniqueByName : function (
+str 
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method addTechnique
+ * @param {cc.Technique} arg0
+ */
+addTechnique : function (
+technique 
+)
+{
+},
+
+/**
+ * @method getTechnique
+ * @return {cc.Technique}
+ */
+getTechnique : function (
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method createWithFilename
+ * @param {String} arg0
+ * @return {cc.Material}
+ */
+createWithFilename : function (
+str 
+)
+{
+    return cc.Material;
+},
+
+/**
+ * @method createWithGLStateProgram
+ * @param {cc.GLProgramState} arg0
+ * @return {cc.Material}
+ */
+createWithGLStateProgram : function (
+glprogramstate 
+)
+{
+    return cc.Material;
+},
+
+/**
+ * @method createWithProperties
+ * @param {cc.Properties} arg0
+ * @return {cc.Material}
+ */
+createWithProperties : function (
+properties 
+)
+{
+    return cc.Material;
+},
+
+};
+
+/**
  * @class TextureCache
  */
 cc.TextureCache = {
@@ -19518,6 +20341,18 @@ str
 )
 {
     return cc.Texture2D;
+},
+
+/**
+ * @method getTextureFilePath
+ * @param {cc.Texture2D} arg0
+ * @return {String}
+ */
+getTextureFilePath : function (
+texture2d 
+)
+{
+    return ;
 },
 
 /**

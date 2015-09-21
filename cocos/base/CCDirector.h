@@ -29,6 +29,7 @@ THE SOFTWARE.
 #define __CCDIRECTOR_H__
 
 #include <stack>
+#include <thread>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
@@ -60,6 +61,10 @@ class Renderer;
 class Camera;
 
 class Console;
+namespace experimental
+{
+    class FrameBuffer;
+}
 
 /**
  * @brief Matrix stack type.
@@ -148,13 +153,13 @@ public:
     inline Scene* getRunningScene() { return _runningScene; }
 
     /** Gets the FPS value. */
-    inline double getAnimationInterval() { return _animationInterval; }
-    /** Sets the FPS value. FPS = 1/internal. */
-    virtual void setAnimationInterval(double interval) = 0;
+    inline float getAnimationInterval() { return _animationInterval; }
+    /** Sets the FPS value. FPS = 1/interval. */
+    virtual void setAnimationInterval(float interval) = 0;
 
-    /** Whether or not to display the FPS on the bottom-left corner. */
+    /** Whether or not displaying the FPS on the bottom-left corner of the screen. */
     inline bool isDisplayStats() { return _displayStats; }
-    /** Display the FPS on the bottom-left corner. */
+    /** Display the FPS on the bottom-left corner of the screen. */
     inline void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
     
     /** Get seconds per frame. */
@@ -255,8 +260,8 @@ public:
     Vec2 convertToUI(const Vec2& point);
 
     /** 
-     * Gets the distance between camera and near clipping frane.
-     * It is correct for default camera that near clipping frane is the same as screen.
+     * Gets the distance between camera and near clipping frame.
+     * It is correct for default camera that near clipping frame is same as the screen.
      */
     float getZEye() const;
 
@@ -484,6 +489,12 @@ public:
      */
     void resetMatrixStack();
 
+    /**
+     * returns the cocos2d thread id.
+     Useful to know if certain code is already running on the cocos2d thread
+     */
+    const std::thread::id& getCocos2dThreadId() const { return _cocos2d_thread_id; }
+
 protected:
     void reset();
     
@@ -539,8 +550,8 @@ protected:
     //texture cache belongs to this director
     TextureCache *_textureCache;
 
-    double _animationInterval;
-    double _oldAnimationInterval;
+    float _animationInterval;
+    float _oldAnimationInterval;
 
     /* landscape mode ? */
     bool _landscape;
@@ -593,11 +604,17 @@ protected:
 
     /* Renderer for the Director */
     Renderer *_renderer;
+    
+    /* Default FrameBufferObject*/
+    experimental::FrameBuffer* _defaultFBO;
 
     /* Console for the director */
     Console *_console;
 
     bool _isStatusLabelUpdated;
+
+    /* cocos2d thread id */
+    std::thread::id _cocos2d_thread_id;
 
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
@@ -627,7 +644,7 @@ public:
     // Overrides
     //
     virtual void mainLoop() override;
-    virtual void setAnimationInterval(double value) override;
+    virtual void setAnimationInterval(float value) override;
     virtual void startAnimation() override;
     virtual void stopAnimation() override;
 

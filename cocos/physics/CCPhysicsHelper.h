@@ -35,7 +35,9 @@
 NS_CC_BEGIN
 
 /**
- * @addtogroup core
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_2d
  * @{
  */
 
@@ -61,9 +63,6 @@ public:
     
     /** Make cpFloat type convert to float type. */
     static float cpfloat2float(cpFloat f) { return f; }
-    
-    /** Make float type convert to cpFloat type. */
-    static cpFloat float2cpfloat(float f) { return f; }
     
     /** Make Rect type convert to cpBB type. */
     static cpBB rect2cpbb(const Rect& rect) { return cpBBNew(rect.origin.x, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height); }
@@ -108,6 +107,7 @@ public:
     }
 };
 
+/** @} */
 /** @} */
 
 NS_CC_END

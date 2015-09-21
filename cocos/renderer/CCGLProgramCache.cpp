@@ -31,6 +31,9 @@ THE SOFTWARE.
 #include "renderer/ccShaders.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -62,6 +65,7 @@ enum {
     kShaderType_3DParticleColor,
     kShaderType_3DSkyBox,
     kShaderType_3DTerrain,
+    kShaderType_CameraClear,
     kShaderType_MAX,
 };
 
@@ -114,6 +118,13 @@ GLProgramCache::~GLProgramCache()
 bool GLProgramCache::init()
 {
     loadDefaultGLPrograms();
+    
+    auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* event){
+        reloadDefaultGLProgramsRelativeToLights();
+    });
+    
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
+    
     return true;
 }
 
@@ -251,6 +262,10 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DTerrain);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_TERRAIN, p));
+    
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_CameraClear);
+    _programs.insert(std::make_pair(GLProgram::SHADER_CAMERA_CLEAR, p));
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -384,6 +399,25 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_3D_TERRAIN);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DTerrain);
+    
+    p = getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_CameraClear);
+}
+
+void GLProgramCache::reloadDefaultGLProgramsRelativeToLights()
+{
+    GLProgram *p = getGLProgram(GLProgram::SHADER_3D_POSITION_NORMAL);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionNormal);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionNormalTex);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
@@ -482,6 +516,9 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             break;
         case kShaderType_3DTerrain:
             p->initWithByteArrays(cc3D_Terrain_vert, cc3D_Terrain_frag);
+            break;
+        case kShaderType_CameraClear:
+            p->initWithByteArrays(ccCameraClearVert, ccCameraClearFrag);
             break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);

@@ -28,11 +28,10 @@
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
+#include <list>
 #include "base/CCVector.h"
-#include "base/CCRef.h"
 #include "math/CCGeometry.h"
 #include "physics/CCPhysicsBody.h"
-#include <list>
 
 struct cpSpace;
 
@@ -43,14 +42,13 @@ class PhysicsJoint;
 class PhysicsShape;
 class PhysicsContact;
 
-typedef Vec2 Vect;
-
 class Director;
 class Node;
 class Sprite;
 class Scene;
 class DrawNode;
 class PhysicsDebugDraw;
+class EventDispatcher;
 
 class PhysicsWorld;
 
@@ -60,7 +58,7 @@ typedef struct PhysicsRayCastInfo
     Vec2 start;
     Vec2 end;              //< in lua, it's name is "ended"
     Vec2 contact;
-    Vect normal;
+    Vec2 normal;
     float fraction;
     void* data;
 }PhysicsRayCastInfo;
@@ -80,7 +78,9 @@ typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsQueryRec
 typedef PhysicsQueryRectCallbackFunc PhysicsQueryPointCallbackFunc;
 
 /**
- * @addtogroup core
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_2d
  * @{
  */
 
@@ -226,16 +226,16 @@ public:
     /**
     * Get the gravity value of this physics world.
     *
-    * @return A Vect object.
+    * @return A Vec2 object.
     */
-    inline Vect getGravity() const { return _gravity; }
+    inline Vec2 getGravity() const { return _gravity; }
     
     /**
     * set the gravity value of this physics world.
     *
     * @param gravity A gravity value of this physics world.
     */
-    void setGravity(const Vect& gravity);
+    void setGravity(const Vec2& gravity);
     
     /**
      * Set the speed of this physics world.
@@ -327,8 +327,9 @@ public:
     void step(float delta);
     
 protected:
-    static PhysicsWorld* construct(Scene& scene);
-    bool init(Scene& scene);
+    static PhysicsWorld* construct(Scene* scene);
+    bool init();
+    
     
     virtual void addBody(PhysicsBody* body);
     virtual void addShape(PhysicsShape* shape);
@@ -351,7 +352,7 @@ protected:
     virtual void updateJoints();
     
 protected:
-    Vect _gravity;
+    Vec2 _gravity;
     float _speed;
     int _updateRate;
     int _updateRateCount;
@@ -368,7 +369,8 @@ protected:
     PhysicsDebugDraw* _debugDraw;
     int _debugDrawMask;
     
-    
+    EventDispatcher* _eventDispatcher;
+
     Vector<PhysicsBody*> _delayAddBodies;
     Vector<PhysicsBody*> _delayRemoveBodies;
     std::vector<PhysicsJoint*> _delayAddJoints;
@@ -378,6 +380,9 @@ protected:
     PhysicsWorld();
     virtual ~PhysicsWorld();
     
+    void beforeSimulation(Node *node, const Mat4& parentToWorldTransform, float nodeParentScaleX, float nodeParentScaleY, float parentRotation);
+    void afterSimulation(Node* node, const Mat4& parentToWorldTransform, float parentRotation);
+
     friend class Node;
     friend class Sprite;
     friend class Scene;
@@ -415,6 +420,8 @@ protected:
 extern const float CC_DLL PHYSICS_INFINITY;
 
 /** @} */
+/** @} */
+
 NS_CC_END
 
 #endif // CC_USE_PHYSICS

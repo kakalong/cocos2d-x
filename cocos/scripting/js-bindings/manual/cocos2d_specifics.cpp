@@ -2449,7 +2449,19 @@ bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
         
         cocos2d::Repeat* action = new (std::nothrow) cocos2d::Repeat;
         action->initWithAction(cobj, timesInt);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+        // Using jsb_ref_rebind will cause GC crash on win32
+        action->autorelease();
+        // Unlink old native object
+        JS::RemoveObjectRoot(cx, &proxy->obj);
+        jsb_remove_proxy(proxy);
+        // Relink with new object
+        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
+        JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::Repeat");
+#else // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
         jsb_ref_rebind(cx, obj, proxy, cobj, action, "cocos2d::Repeat");
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
         args.rval().set(OBJECT_TO_JSVAL(obj));
         return true;
@@ -2471,7 +2483,19 @@ bool js_cocos2dx_ActionInterval_repeatForever(JSContext *cx, uint32_t argc, jsva
         cocos2d::RepeatForever* action = new (std::nothrow) cocos2d::RepeatForever;
         action->initWithAction(cobj);
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+        // Using jsb_ref_rebind will cause GC crash on win32
+        action->autorelease();
+        // Unlink old native object
+        JS::RemoveObjectRoot(cx, &proxy->obj);
+        jsb_remove_proxy(proxy);
+        // Relink with new object
+        js_proxy_t* newProxy = jsb_new_proxy(action, jsobj);
+        JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::RepeatForever");
+#else // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
         jsb_ref_rebind(cx, jsobj, proxy, cobj, action, "cocos2d::RepeatForever");
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
         args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
     }
@@ -2501,7 +2525,18 @@ bool js_cocos2dx_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
         
         cocos2d::Speed* action = new (std::nothrow) cocos2d::Speed;
         action->initWithAction(cobj, speed);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+        // Using jsb_ref_rebind will cause GC crash on win32
+        action->autorelease();
+        // Unlink old native object
+        JS::RemoveObjectRoot(cx, &proxy->obj);
+        jsb_remove_proxy(proxy);
+        // Relink with new object
+        js_proxy_t* newProxy = jsb_new_proxy(action, obj);
+        JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::Speed");
+#else // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
         jsb_ref_rebind(cx, obj, proxy, cobj, action, "cocos2d::Speed");
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
         args.rval().set(OBJECT_TO_JSVAL(obj));
         return true;
@@ -2809,8 +2844,19 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
         }
     }
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    // Using jsb_ref_rebind will cause GC crash on win32
+    newAction->autorelease();
+    // Unlink old native object
+    JS::RemoveObjectRoot(cx, &proxy->obj);
+    jsb_remove_proxy(proxy);
+    // Relink with new object
+    js_proxy_t* newProxy = jsb_new_proxy(newAction, jsobj);
+    JS::AddNamedObjectRoot(cx, &newProxy->obj, "cocos2d::EaseAction");
+#else // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
     // Unbind existing proxy binding with cobj, and rebind with the new action
     jsb_ref_rebind(cx, jsobj, proxy, oldAction, newAction, "cocos2d::EaseAction");
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
     args.rval().set(OBJECT_TO_JSVAL(jsobj));
     return true;
@@ -5549,20 +5595,15 @@ bool js_cocos2dx_PolygonInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp
 
 void js_cocos2d_PolygonInfo_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PolygonInfo)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject jsobj(cx, obj);
-    jsproxy = jsb_get_js_proxy(jsobj);
-    if (jsproxy)
+    auto proxy = jsb_get_js_proxy(jsobj);
+    if (proxy)
     {
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-        
-        cocos2d::PolygonInfo *nobj = static_cast<cocos2d::PolygonInfo *>(nproxy->ptr);
+        cocos2d::PolygonInfo *nobj = static_cast<cocos2d::PolygonInfo *>(proxy->ptr);
         if (nobj)
             delete nobj;
-        
-        jsb_remove_proxy(nproxy, jsproxy);
+        jsb_remove_proxy(proxy);
     }
 }
 
@@ -5712,19 +5753,14 @@ bool js_cocos2dx_AutoPolygon_constructor(JSContext *cx, uint32_t argc, jsval *vp
 
 void js_cocos2d_AutoPolygon_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (AutoPolygon)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedObject jsobj(cx, obj);
-    jsproxy = jsb_get_js_proxy(jsobj);
-    if (jsproxy) {
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-        
-        cocos2d::AutoPolygon *nobj = static_cast<cocos2d::AutoPolygon *>(nproxy->ptr);
+    auto proxy = jsb_get_js_proxy(jsobj);
+    if (proxy) {
+        cocos2d::AutoPolygon *nobj = static_cast<cocos2d::AutoPolygon *>(proxy->ptr);
         if (nobj)
             delete nobj;
-        
-        jsb_remove_proxy(nproxy, jsproxy);
+        jsb_remove_proxy(proxy);
     }
 }
 

@@ -841,16 +841,13 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
             JS::RootedValue jsvalExtraData(cx, tmpCobj->getJSExtraData());
             
             JS::RootedValue senderVal(cx);
-            if (sender)
+            if (!sender)
             {
-                js_type_class_t *nodeClass = js_get_type_from_native<cocos2d::Node>(sender);
-                auto nodeObj = jsb_ref_get_or_create_jsobject(cx, sender, nodeClass, "cocos2d::Node");
-                senderVal.set(OBJECT_TO_JSVAL(nodeObj));
+                sender = ret->getTarget();
             }
-            else
-            {
-                senderVal.set(JS::NullValue());
-            }
+            js_type_class_t *nodeClass = js_get_type_from_native<cocos2d::Node>(sender);
+            auto nodeObj = jsb_ref_get_or_create_jsobject(cx, sender, nodeClass, "cocos2d::Node");
+            senderVal.set(OBJECT_TO_JSVAL(nodeObj));
             
             if (!jsvalCallback.isNullOrUndefined())
             {
@@ -2218,7 +2215,7 @@ bool js_forceGC(JSContext *cx, uint32_t argc, jsval *vp) {
 bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
@@ -2233,7 +2230,7 @@ bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);

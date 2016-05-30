@@ -2738,7 +2738,7 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
     double tag;
     double parameter;
 
-    for (int i = 0; i < argc; i++)
+    for (uint32_t i = 0; i < argc; i++)
     {
         //        jsval vpi = argv[i];
         JS::RootedValue vpi(cx, args.get(i));
@@ -4251,6 +4251,10 @@ bool js_cocos2dx_CCFileUtils_getDataFromFile(JSContext *cx, uint32_t argc, jsval
                 args.rval().set(OBJECT_TO_JSVAL(array));
                 return true;
             }
+
+            // return null if read failed.
+            args.rval().set(JSVAL_NULL);
+            return true;
         } while(false);
 
         JS_ReportError(cx, "get file(%s) data fails", arg0.c_str());

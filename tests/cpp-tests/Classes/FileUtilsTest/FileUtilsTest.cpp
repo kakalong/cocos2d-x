@@ -622,7 +622,7 @@ static const std::string FileErrors[] = {
     "OK",
     "NotExists",
     "OpenFailed",
-    "ReadFaild",
+    "ReadFailed",
     "NotInitialized",
     "TooLarge",
     "ObtainSizeFailed",
@@ -795,6 +795,8 @@ void TestWriteValueMap::onEnter()
     ValueMap mapInValueMap;
     mapInValueMap["string1"] = "string in dictInMap key 0";
     mapInValueMap["string2"] = "string in dictInMap key 1";
+    mapInValueMap["none"].getType();
+    
     valueMap["data0"] = Value(mapInValueMap);
 
     valueMap["data1"] = Value("string in array");

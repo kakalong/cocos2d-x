@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "2d/CCFontFNT.h"
+#include <cmath>
 #include <set>
 #include "base/uthash.h"
 #include "2d/CCFontAtlas.h"
@@ -380,7 +381,7 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
         {
             /*
              fontSize       2   int      0
-             bitField       1   bits     2  bit 0: smooth, bit 1: unicode, bit 2: italic, bit 3: bold, bit 4: fixedHeigth, bits 5-7: reserved
+             bitField       1   bits     2  bit 0: smooth, bit 1: unicode, bit 2: italic, bit 3: bold, bit 4: fixedHeight, bits 5-7: reserved
              charSet        1   uint     3
              stretchH       2   uint     4
              aa             1   uint     6
@@ -750,7 +751,7 @@ FontAtlas * FontFNT::createFontAtlas()
     int originalFontSize = _configuration->_fontSize;
     float originalLineHeight = _configuration->_commonHeight;
     float factor = 0.0f;
-    if (fabs(_fontSize - originalFontSize) < FLT_EPSILON) {
+    if (std::abs(_fontSize - originalFontSize) < FLT_EPSILON) {
         factor = 1.0f;
     }else {
         factor = _fontSize / originalFontSize;
